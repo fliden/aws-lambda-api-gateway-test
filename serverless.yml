@@ -1,0 +1,19 @@
+service: g11n-service
+
+provider:
+  name: aws
+  runtime: java8
+  stage: dev
+  region: us-west-1
+
+package:
+  artifact: build/distributions/g11n-aws-gateway-lambda.zip
+
+functions:
+  g11n:
+    handler: com.fliden.g11n.RequestHandler
+    events:
+      - http:
+          path: g11n/{proxy+}
+          method: get
+

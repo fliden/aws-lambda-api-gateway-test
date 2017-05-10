@@ -1,0 +1,28 @@
+apply plugin: 'java'
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    compile (
+        'com.jrestless.aws:jrestless-aws-gateway-handler:0.5.0',
+        'org.glassfish.jersey.media:jersey-media-json-jackson:2.23',
+        'com.googlecode.libphonenumber:libphonenumber:8.4.2'
+    )
+}
+
+task buildZip(type: Zip) {
+    archiveName = "${project.name}.zip"
+    from compileJava
+    from processResources
+    into('lib') {
+        from configurations.runtime
+    }
+}
+
+build.dependsOn buildZip
